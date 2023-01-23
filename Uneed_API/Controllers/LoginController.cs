@@ -18,6 +18,10 @@ namespace Uneed_API.Controllers
         public async Task<ActionResult> Login(Models.Login login)
         {
             var user = await _serviceLogin.Login(login);
+            if(user == null)
+            {
+                return Unauthorized();
+            }
             return Ok(new
             {
                 token = _serviceLogin.generateToken(user),

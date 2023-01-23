@@ -2,7 +2,7 @@
 {
     public interface IServiceUser
     {
-        Task<IEnumerable<Models.User>> GetUsers();
+        Task<IEnumerable<DTO.UserResponse>> GetUsers();
         Task<Models.User> GetUserByEmail(string email);
         Task<Models.User> GetUserById(int id);
         Task<bool> SaveUser(Models.User user);

@@ -3,6 +3,8 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore.Metadata.Internal;
+using Uneed_API.DTO;
+using Uneed_API.Models;
 using Uneed_API.Services;
 
 namespace Uneed_API.Controllers
@@ -20,6 +22,7 @@ namespace Uneed_API.Controllers
         [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
         public async Task<ActionResult> Get()
         {
+            
             return Ok(await _serviceUser.GetUsers());
         }
         [HttpPost]
