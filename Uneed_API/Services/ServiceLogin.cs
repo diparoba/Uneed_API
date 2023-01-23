@@ -18,7 +18,7 @@ namespace Uneed_API.Services
             _configuration = configuration;
         }
 
-        
+
 
         public async Task<User> Login(Login user)
         {
@@ -45,8 +45,8 @@ namespace Uneed_API.Services
             {
                 return null;
             }
-            
-                                                          
+
+
         }
         public object generateToken(User user)
         {

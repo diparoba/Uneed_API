@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using Uneed_API.DTO;
 using Uneed_API.Models;
 
 namespace Uneed_API.Services
@@ -13,7 +14,7 @@ namespace Uneed_API.Services
             _configuration = configuration;
 
         }
-       
+
 
         public async Task<User> GetUserByEmail(string email)
         {
@@ -43,12 +44,25 @@ namespace Uneed_API.Services
             }
         }
 
-        public async Task<IEnumerable<User>> GetUsers()
+        public async Task<IEnumerable<UserResponse>> GetUsers()
         {
             try
             {
-                List<User> result = await _dataContext.User.Where(data => data.Status.Equals("A")).ToListAsync();
-                return result;
+                //List<User> result = await _dataContext.User.Where(data => data.Status.Equals("A")).ToListAsync();
+                List<UserResponse> result = await _dataContext.User.Include(u => u.Rol).Select
+                    (u => new UserResponse()
+                    {
+                        Id = u.Id,
+                        Name = u.Name,
+                        Lastname = u.Lastname,
+                        Email = u.Email,
+                        Status = u.Status,
+                        Password = u.Password,
+                        Phone = u.Phone,
+                        RolId = u.RolId,
+                        RolName = u.Rol.Description
+                    }).ToListAsync();
+                return (IEnumerable<UserResponse>)result;
             }
             catch
             {
@@ -67,7 +81,6 @@ namespace Uneed_API.Services
                     return false;
                 }
                 user.CreatedDate = DateTime.Now;
-                //user.UpdateDate = DateTime.Now;
                 user.Status = "A";
                 _dataContext.User.Add(user);
                 return await _dataContext.SaveChangesAsync() > 0;
@@ -126,5 +139,7 @@ namespace Uneed_API.Services
             }
 
         }
+
+
     }
 }
