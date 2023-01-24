@@ -15,7 +15,7 @@ namespace Uneed_API.Models
         public string? Adress { get; set; }
         public bool? IsProvider { get; set; }
         public string? Gender { get; set; }
-        public string? BithDate { get; set; }
+        public string? BirthDate { get; set; }
         public int RolId { get; set; }
         public DateTime UpdateDate { get; set; }
         public DateTime CreatedDate { get; set; }

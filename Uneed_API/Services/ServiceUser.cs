@@ -140,6 +140,9 @@ namespace Uneed_API.Services
 
         }
 
-
+        public Task<bool> ChangePassword(string UserName, string CurrentPassword, string NewPassword, string ConfirmPassword)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

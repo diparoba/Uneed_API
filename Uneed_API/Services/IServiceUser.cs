@@ -8,7 +8,7 @@
         Task<bool> SaveUser(Models.User user);
         Task<bool> UpdateUser(int idUser, Models.User user);
         Task<bool> DeleteUser(int id);
-        //Task<bool> ChangePassword(string oldPassword, string newPassword);
+        Task<bool> ChangePassword(string UserName, string CurrentPassword, string NewPassword, string ConfirmPassword);
 
     }
 }
