@@ -7,6 +7,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Uneed_API", "Uneed_API\Unee
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Uneed_Mongo_API", "Uneed_Mongo_API\Uneed_Mongo_API.csproj", "{0A00F3B2-5C50-49EA-8394-7DAD8D3D9D93}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Uneed_Ocelot", "Uneed_Ocelot\Uneed_Ocelot.csproj", "{3C5211DE-4BFB-45E9-ACD0-A25F6D6FF7B3}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +23,10 @@ Global
 		{0A00F3B2-5C50-49EA-8394-7DAD8D3D9D93}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{0A00F3B2-5C50-49EA-8394-7DAD8D3D9D93}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{0A00F3B2-5C50-49EA-8394-7DAD8D3D9D93}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3C5211DE-4BFB-45E9-ACD0-A25F6D6FF7B3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3C5211DE-4BFB-45E9-ACD0-A25F6D6FF7B3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3C5211DE-4BFB-45E9-ACD0-A25F6D6FF7B3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3C5211DE-4BFB-45E9-ACD0-A25F6D6FF7B3}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
