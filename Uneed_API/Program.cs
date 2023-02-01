@@ -40,6 +40,7 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
 //Servicios Activos
 builder.Services.AddScoped<IServiceUser, ServiceUser>();
 builder.Services.AddScoped<IServiceLogin, ServiceLogin>();
+builder.Services.AddScoped<IServiceCategory, ServiceCategory>();
 
 builder.Services.AddCors(options =>
 {
@@ -50,10 +51,24 @@ builder.Services.AddCors(options =>
                                 "http://uneed.com").AllowAnyHeader().AllowAnyMethod();
         });
 
+    options.AddPolicy("PauloVi",
+        policy =>
+        {
+            policy.WithOrigins("http://localhost:8081")
+                                .AllowAnyHeader()
+                                .AllowAnyMethod();
+        });
     options.AddPolicy("AnotherPolicy",
         policy =>
         {
-            policy.WithOrigins("http://www.contoso.com")
+            policy.WithOrigins("http://186.4.129.103")
+                                .AllowAnyHeader()
+                                .AllowAnyMethod();
+        });
+    options.AddPolicy("All",
+        policy =>
+        {
+            policy.WithOrigins("*")
                                 .AllowAnyHeader()
                                 .AllowAnyMethod();
         });

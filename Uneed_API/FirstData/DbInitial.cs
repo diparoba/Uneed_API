@@ -13,32 +13,60 @@ namespace Uneed_API.FirstData
                 return;
             }
             //Create Service Category
-            var srvCategory = new Models.ServiceCategory[]
+            var srvCategory = new Models.ServCategory[]
           {
-                new Models.ServiceCategory
+                new Models.ServCategory
                 {
                     Id= 1,
-                    ServiceName = "Plomero"
+                    ServiceName = "Plomería",
+                    Status = "A"
                 },
-                new Models.ServiceCategory
+                new Models.ServCategory
                 {
                     Id= 2,
-                    ServiceName = "Carpintero"
+                    ServiceName = "Carpintería",
+                    Status = "A"
                 },
-                new Models.ServiceCategory
+                new Models.ServCategory
                 {
                     Id= 3,
-                    ServiceName = "Electricista"
+                    ServiceName = "Electricidad",
+                    Status = "A"
                 },
-                new Models.ServiceCategory
+                new Models.ServCategory
                 {
                     Id= 4,
-                    ServiceName = "Plomero"
+                    ServiceName = "Mecánica",
+                    Status = "A"
+                },
+                new Models.ServCategory
+                {
+                    Id= 5,
+                    ServiceName = "Sastrería",
+                    Status = "A"
+                },
+                new Models.ServCategory
+                {
+                    Id= 6,
+                    ServiceName = "Computación",
+                    Status = "A"
+                },
+                new Models.ServCategory
+                {
+                    Id= 7,
+                    ServiceName = "Medicina",
+                    Status = "A"
+                },
+                new Models.ServCategory
+                {
+                    Id= 8,
+                    ServiceName = "Abogacía",
+                    Status = "A"
                 }
           };
             foreach (var item in srvCategory)
             {
-                context.ServiceCategory.Add(item);
+                context.ServCategory.Add(item);
             }
             context.SaveChanges();
             //Rol Create

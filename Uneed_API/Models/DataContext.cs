@@ -19,7 +19,7 @@ namespace Uneed_API.Models
         }
         public DbSet<Rol> Rol { get; set; }
         public DbSet<User> User { get; set; }
-        public DbSet<ServiceProvider> ServiceProvider { get; set; }
-        public DbSet<ServiceCategory> ServiceCategory { get; set; }
+        public DbSet<ServProvider> ServProvider { get; set; }
+        public DbSet<ServCategory> ServCategory { get; set; }
     }
 }

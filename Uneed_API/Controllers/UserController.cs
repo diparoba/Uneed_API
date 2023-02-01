@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore.Metadata.Internal;
@@ -9,6 +10,7 @@ using Uneed_API.Services;
 
 namespace Uneed_API.Controllers
 {
+    [EnableCors("All")]
     [Route("api/[controller]")]
     [ApiController]
     public class UserController : ControllerBase
@@ -36,8 +38,12 @@ namespace Uneed_API.Controllers
                 Email= user.Email,
                 Status= user.Status,
                 Password = user.Password,
+                Identification= user.Identification,
                 Phone= user.Phone,
-                RolId = user.RolId
+                RolId= user.RolId,
+                Adress= user.Adress,
+                Gender= user.Gender,
+                BirthDate= user.BirthDate,
             };
             var result = await _serviceUser.SaveUser(userData);
             return Ok(

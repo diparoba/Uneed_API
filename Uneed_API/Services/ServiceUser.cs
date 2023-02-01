@@ -58,6 +58,10 @@ namespace Uneed_API.Services
                         Email = u.Email,
                         Status = u.Status,
                         Password = u.Password,
+                        Identification= u.Identification,
+                        Adress= u.Adress,
+                        Gender=u.Gender,
+                        BirthDate=u.BirthDate,
                         Phone = u.Phone,
                         RolId = u.RolId,
                         RolName = u.Rol.Description
@@ -82,6 +86,7 @@ namespace Uneed_API.Services
                 }
                 user.CreatedDate = DateTime.Now;
                 user.Status = "A";
+                user.RolId= 2;
                 _dataContext.User.Add(user);
                 return await _dataContext.SaveChangesAsync() > 0;
 
