@@ -8,7 +8,7 @@ namespace Uneed_Mongo_API.Repositories
         public IMongoDatabase db;
         public MongoDBRepository()
         {
-            client= new MongoClient("mongodb://localhost:27017");
+            client= new MongoClient("mongodb://uneed-mongo:27017");
             db = client.GetDatabase("Category");
         }
     }

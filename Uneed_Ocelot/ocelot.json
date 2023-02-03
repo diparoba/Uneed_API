@@ -5,8 +5,8 @@
       "DownstreamScheme": "http",
       "DownstreamHostAndPorts": [
         {
-          "Host": "localhost",
-          "Port": 5001
+          "Host": "uneed-api",
+          "Port": 8080
         }
       ],
       "UpstreamPathTemplate": "/login",
@@ -17,8 +17,8 @@
       "DownstreamScheme": "http",
       "DownstreamHostAndPorts": [
         {
-          "Host": "localhost",
-          "Port": 5001
+          "Host": "uneed-api",
+          "Port": 8080
         }
       ],
       "UpstreamPathTemplate": "/getUsers",
@@ -29,7 +29,7 @@
       "DownstreamScheme": "http",
       "DownstreamHostAndPorts": [
         {
-          "Host": "localhost",
+          "Host": "uneed-mongoapi",
           "Port": 5002
         }
       ],
@@ -41,7 +41,7 @@
       "DownstreamScheme": "http",
       "DownstreamHostAndPorts": [
         {
-          "Host": "localhost",
+          "Host": "uneed-mongoapi",
           "Port": 5002
         }
       ],

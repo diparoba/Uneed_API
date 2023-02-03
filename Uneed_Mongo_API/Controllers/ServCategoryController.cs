@@ -1,4 +1,6 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using System.Net.Http.Headers;
 using Uneed_Mongo_API.Models;
 using Uneed_Mongo_API.Services;
@@ -6,6 +8,7 @@ using Uneed_Mongo_API.Services;
 namespace Uneed_Mongo_API.Controllers
 {
     [Route("api/[controller]")]
+    [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
     [ApiController]
     public class ServCategoryController : Controller
     {
