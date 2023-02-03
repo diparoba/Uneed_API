@@ -18,26 +18,26 @@ namespace Uneed_Mongo_API.Services
         {
             var filter = Builders<ServCategory>.Filter.Eq(s => s.Id, new ObjectId(id));
                 await _collection.DeleteOneAsync(filter);
-            //throw new NotImplementedException();
+            
         }
 
         public async Task<IEnumerable<ServCategory>> GetAllCategories()
         {
             return await _collection.FindAsync(new BsonDocument()).Result.ToListAsync();
-            //throw new NotImplementedException();
+            
         }
 
         public async Task<ServCategory> GetCategoryById(string id)
         {
             return await _collection.FindAsync(
                 new BsonDocument { { "_id", new ObjectId(id) } }).Result.FirstOrDefaultAsync();
-            //throw new NotImplementedException();
+            
         }
 
         public async Task InsertCategory(ServCategory servCategory)
         {
             await _collection.InsertOneAsync(servCategory);
-            //throw new NotImplementedException();
+            
         }
 
         public async Task UpdateCategory(ServCategory servCategory)
