@@ -17,7 +17,7 @@ namespace Uneed_API.Controllers
         }
         [HttpPost]
         [Route("auth")]
-        public async Task<ActionResult> Login(Models.Login login)
+        public async Task<ActionResult> Login(Models.Auth login)
         {
             var user = await _serviceLogin.Login(login);
             if(user == null)

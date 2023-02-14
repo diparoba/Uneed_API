@@ -11,7 +11,7 @@ namespace Uneed_API.Models
         public string? Status { get; set; }
         public string? Email { get; set; }
         public string? Password { get; set; }
-        public string? Identification {get; set;}
+        public string? Identification { get; set; }
         public string? Phone { get; set; }
         public string? Adress { get; set; }
         public bool? IsProvider { get; set; }
@@ -21,7 +21,8 @@ namespace Uneed_API.Models
         public DateTime UpdateDate { get; set; }
         public DateTime CreatedDate { get; set; }
         public virtual Rol Rol { get; set; }
-        public virtual ICollection<ServProvider> ServiceProvider { get; set; }
+        public virtual ICollection<Provider> Provider { get; set; }
         public virtual ICollection<ContratService> ContratService { get; set; }
+
     }
 }

@@ -5,6 +5,8 @@ using Uneed_API.FirstData;
 using Uneed_API.Models;
 using Uneed_API.Services;
 using Uneed_API.Utilities;
+using IServiceProvider = Uneed_API.Services.IServiceProvider;
+using ServiceProvider = Uneed_API.Services.ServiceProvider;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -18,7 +20,7 @@ builder.Services.AddDbContext<DataContext>(options =>
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
-//Configuración de Token
+//Configuraciï¿½n de Token
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
     .AddJwtBearer(options =>
     {
@@ -41,6 +43,7 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
 builder.Services.AddScoped<IServiceUser, ServiceUser>();
 builder.Services.AddScoped<IServiceLogin, ServiceLogin>();
 builder.Services.AddScoped<IServiceCategory, ServiceCategory>();
+builder.Services.AddScoped<IServiceProvider, ServiceProvider>();
 
 builder.Services.AddCors(options =>
 {
@@ -68,10 +71,11 @@ builder.Services.AddCors(options =>
     options.AddPolicy("All",
         policy =>
         {
-            policy.WithOrigins("*")
+            policy.WithOrigins("*", "http://localhost:3000" , "http://localhost:5173")
                                 .AllowAnyHeader()
                                 .AllowAnyMethod();
         });
+
 });
 
 

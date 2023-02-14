@@ -13,51 +13,51 @@ namespace Uneed_API.FirstData
                 return;
             }
             //Create Service Category
-            var srvCategory = new Models.ServCategory[]
+            var srvCategory = new Models.Category[]
           {
-                new Models.ServCategory
+                new Models.Category
                 {
                     Id= 1,
                     ServiceName = "Plomería",
                     Status = "A"
                 },
-                new Models.ServCategory
+                new Models.Category
                 {
                     Id= 2,
                     ServiceName = "Carpintería",
                     Status = "A"
                 },
-                new Models.ServCategory
+                new Models.Category
                 {
                     Id= 3,
                     ServiceName = "Electricidad",
                     Status = "A"
                 },
-                new Models.ServCategory
+                new Models.Category
                 {
                     Id= 4,
                     ServiceName = "Mecánica",
                     Status = "A"
                 },
-                new Models.ServCategory
+                new Models.Category
                 {
                     Id= 5,
                     ServiceName = "Sastrería",
                     Status = "A"
                 },
-                new Models.ServCategory
+                new Models.Category
                 {
                     Id= 6,
                     ServiceName = "Computación",
                     Status = "A"
                 },
-                new Models.ServCategory
+                new Models.Category
                 {
                     Id= 7,
                     ServiceName = "Medicina",
                     Status = "A"
                 },
-                new Models.ServCategory
+                new Models.Category
                 {
                     Id= 8,
                     ServiceName = "Abogacía",
@@ -66,7 +66,7 @@ namespace Uneed_API.FirstData
           };
             foreach (var item in srvCategory)
             {
-                context.ServCategory.Add(item);
+                context.Category.Add(item);
             }
             context.SaveChanges();
             //Rol Create

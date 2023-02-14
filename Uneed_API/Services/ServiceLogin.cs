@@ -20,7 +20,7 @@ namespace Uneed_API.Services
 
 
 
-        public async Task<User> Login(Login user)
+        public async Task<User> Login(Auth user)
         {
             var userInfo = await authUser(user.UserName, user.Password);
             if (userInfo == null)

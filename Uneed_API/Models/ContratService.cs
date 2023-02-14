@@ -11,7 +11,7 @@ namespace Uneed_API.Models
         public string? Finish { get; set; }
         public string? State { get; set; }
         public virtual User User { get; set; }
-        public virtual ServProvider ServiceProvider { get; set; }
+        public virtual Provider Provider { get; set; }
         public virtual ICollection<Calification> Califications { get; set; } 
     }
 }

@@ -4,6 +4,6 @@ namespace Uneed_API.Services
 {
     public interface IServiceCategory
     {
-        Task<IEnumerable<ServCategory>> GetCategories();
+        Task<IEnumerable<Category>> GetCategories();
     }
 }

@@ -13,11 +13,11 @@ namespace Uneed_API.Controllers
     [Route("api/[Controller]")]
     [ApiController]
 
-    public class ServCategoryController : ControllerBase
+    public class CategoryController : ControllerBase
     {
     private readonly IServiceCategory _serviceCategory;
 
-    public ServCategoryController(IServiceCategory serviceCategory)
+    public CategoryController(IServiceCategory serviceCategory)
         {
         _serviceCategory = serviceCategory;
         }

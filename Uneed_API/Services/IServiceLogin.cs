@@ -2,7 +2,7 @@
 {
     public interface IServiceLogin
     {
-        Task<Models.User> Login(Models.Login user);
+        Task<Models.User> Login(Models.Auth user);
         object generateToken(Models.User user);
     }
 }

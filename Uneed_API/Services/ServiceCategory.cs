@@ -13,12 +13,12 @@ namespace Uneed_API.Services
             _configuration = configuration;
         }
 
-        public async Task<IEnumerable<ServCategory>> GetCategories()
+        public async Task<IEnumerable<Category>> GetCategories()
         {
             try
             {
-                var result = await _dataContext.ServCategory.Where(data => data.Status.Equals("A")).ToListAsync();
-                return (IEnumerable<ServCategory>)result;
+                var result = await _dataContext.Category.Where(data => data.Status.Equals("A")).ToListAsync();
+                return (IEnumerable<Category>)result;
             }
             catch
             {
