@@ -148,5 +148,27 @@ namespace Uneed_API.Services
         {
             throw new NotImplementedException();
         }
+
+        public async Task<bool> ChangeProviderToTrue(int id)
+        {
+            try
+            {
+                var user = await _dataContext.User.FirstOrDefaultAsync(u => u.Id == id);
+
+                if (user == null)
+                {
+                    return false;
+                }
+
+                user.IsProvider = true;
+                await _dataContext.SaveChangesAsync();
+
+                return true;
+            }
+            catch
+            {
+                return false;
+            }
+        }
     }
 }

@@ -19,11 +19,13 @@ namespace Uneed_API.Controllers
         private readonly IServiceUser _serviceUser;
         private readonly IServiceAddress _serviceAddress;
         private readonly Services.IServiceProvider _serviceProvider;
-        public UserController(IServiceUser serviceUser, IServiceAddress serviceAddress, Services.IServiceProvider serviceProvider)
+        private readonly IServiceContrat _serviceContrat;
+        public UserController(IServiceUser serviceUser, IServiceAddress serviceAddress, Services.IServiceProvider serviceProvider, IServiceContrat serviceContrat)
         {
             _serviceProvider = serviceProvider;
             _serviceUser = serviceUser;
             _serviceAddress = serviceAddress;
+            _serviceContrat = serviceContrat;
         }
 
 
@@ -131,13 +133,16 @@ namespace Uneed_API.Controllers
                     Description = providerResponse.Description,
                     UserId = userId,
                     CategoryId = providerResponse.CategoryId,
-                    Status = "P"
+                    Status = "A"
                 };
 
                 var result = await _serviceProvider.Save(provider);
 
                 if (result)
                 {
+                    // Cambiar IsProvider a true
+                    await _serviceUser.ChangeProviderToTrue(userId);
+
                     return Ok(new { message = "Registrado correctamente como proveedor" });
                 }
                 else
@@ -150,6 +155,84 @@ namespace Uneed_API.Controllers
                 return BadRequest(ex.Message);
             }
         }
+
+        [HttpGet("adresses")]
+        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
+        public async Task<ActionResult<IEnumerable<Address>>> GetAddressesByUserId()
+        {
+            try
+            {
+                var userId = AuthHelper.GetUserId(HttpContext);
+                var addresses = await _serviceAddress.GetByUser(userId);
+                return Ok(addresses);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
+        [HttpPost("contract")]
+        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
+        public async Task<ActionResult> RequestContract(ContratResponse contratRequest)
+        {
+            try
+            {
+                var userId = AuthHelper.GetUserId(HttpContext);
+
+                var contratService = await _serviceContrat.RequestContract(
+                    userId,
+                    contratRequest.ProviderId,
+                    contratRequest.DayDate,
+                    contratRequest.Price,
+                    contratRequest.AddressId
+                    );
+
+                if (contratService == null)
+                {
+                    return BadRequest("Error al solicitar el contrato.");
+                }
+
+                return Ok(new { contratServiceId = contratService.Id });
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
+
+
+        [HttpGet("contracts")]
+        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
+        public async Task<ActionResult<IEnumerable<ContratResponse>>> GetContratsByUserId()
+        {
+            try
+            {
+                var userId = AuthHelper.GetUserId(HttpContext);
+
+                var contrats = await _serviceContrat.GetContratsByUserId(userId);
+
+                var contratsResponse = contrats.Select(c => new ContratResponse
+                {
+                    Id = c.Id,
+                    UserId = c.User.Id,
+                    ProviderId = c.Provider.Id,
+                    DayDate = c.DayDate,
+                    Price = c.Price,
+                    State = c.State,
+                    AddressId = c.AddressUser.Address.Id,
+                    AddressPrincipalStreet = c.AddressUser.Address.PrincipalStreet,
+                    AddressSecondaryStreet = c.AddressUser.Address.SecondaryStreet,
+                    AddressCity = c.AddressUser.Address.City
+                });
+
+                return Ok(contratsResponse);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
+
 
     }
 }

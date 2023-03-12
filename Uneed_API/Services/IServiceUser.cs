@@ -9,6 +9,7 @@
         Task<bool> Update(int idUser, Models.User user);
         Task<bool> Delete(int id);
         Task<bool> ChangePassword(string UserName, string CurrentPassword, string NewPassword, string ConfirmPassword);
+        Task<bool> ChangeProviderToTrue(int id);
 
     }
 }

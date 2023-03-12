@@ -131,7 +131,7 @@ namespace Uneed_API.Services
             try
             {
                 provider.Status = "A";
-                provider.User.IsProvider = true;
+                //provider.User.IsProvider = true;
                 _dataContext.Provider.Add(provider);
                 await _dataContext.SaveChangesAsync();
                 return true;
@@ -222,6 +222,11 @@ namespace Uneed_API.Services
             {
                 return false;
             }
+        }
+
+        public Task<ProviderResponse> GetByProviderId(int providerId)
+        {
+            throw new NotImplementedException();
         }
     }
 }

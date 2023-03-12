@@ -6,6 +6,7 @@ namespace Uneed_API.Services
         Task<IEnumerable<DTO.ProviderResponse>> GetByCategory(string categoryName);
         Task<IEnumerable<DTO.ProviderResponse>> GetByUserName(string userName);
         Task<DTO.ProviderResponse> GetByProviderName(string providerName);
+        Task<DTO.ProviderResponse> GetByProviderId(int providerId);
         Task<bool> Save(Models.Provider provider);
         Task<bool> Update(int idProvider, Models.Provider provider);
         Task<bool> Delete(int idProvider);

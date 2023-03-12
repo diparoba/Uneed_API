@@ -22,6 +22,7 @@ namespace Uneed_API.Models
         public virtual Rol Rol { get; set; }
         public virtual ICollection<AddressUser> AddressUser { get; set; }
         public virtual ICollection<Provider> Provider { get; set; }
+        public virtual ICollection<Calification> Calification { get; set; }
         public virtual ICollection<ContratService> ContratService { get; set; }
 
     }
