@@ -44,6 +44,8 @@ builder.Services.AddScoped<IServiceUser, ServiceUser>();
 builder.Services.AddScoped<IServiceLogin, ServiceLogin>();
 builder.Services.AddScoped<IServiceCategory, ServiceCategory>();
 builder.Services.AddScoped<IServiceProvider, ServiceProvider>();
+builder.Services.AddScoped<IServiceAddress, ServiceAddress>();
+builder.Services.AddScoped<IServiceContrat, ServiceContrat>();
 
 builder.Services.AddCors(options =>
 {
@@ -64,16 +66,16 @@ builder.Services.AddCors(options =>
     options.AddPolicy("AnotherPolicy",
         policy =>
         {
-            policy.WithOrigins("http://186.4.129.103")
-                                .AllowAnyHeader()
-                                .AllowAnyMethod();
+            policy.AllowAnyOrigin()
+                  .AllowAnyHeader()
+                  .AllowAnyMethod();
         });
     options.AddPolicy("All",
         policy =>
         {
-            policy.WithOrigins("*", "http://localhost:3000" , "http://localhost:5173")
-                                .AllowAnyHeader()
-                                .AllowAnyMethod();
+            policy.WithOrigins("*")
+                  .AllowAnyHeader()
+                  .AllowAnyMethod();
         });
 
 });

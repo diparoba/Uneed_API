@@ -2,12 +2,13 @@ namespace Uneed_API.Services
 {
     public interface IServiceProvider
     {
-        Task<IEnumerable<DTO.ProviderResponse>> GetProviders();
-        Task<IEnumerable<DTO.ProviderResponse>> GetProvidersByCategory(string categoryName);
-        Task<IEnumerable<DTO.ProviderResponse>> GetProvidersByUserName(string userName);
-        Task<DTO.ProviderResponse> GetProviderByProviderName(string providerName);
-        Task<bool> SaveProvider(Models.Provider provider);
-        Task<bool> UpdateProvider(int idProvider, Models.Provider provider);
-        Task<bool> DeleteProvider(int idProvider);
+        Task<IEnumerable<DTO.ProviderResponse>> GetAll();
+        Task<IEnumerable<DTO.ProviderResponse>> GetByCategory(string categoryName);
+        Task<IEnumerable<DTO.ProviderResponse>> GetByUserName(string userName);
+        Task<DTO.ProviderResponse> GetByProviderName(string providerName);
+        Task<bool> Save(Models.Provider provider);
+        Task<bool> Update(int idProvider, Models.Provider provider);
+        Task<bool> Delete(int idProvider);
+        Task<bool> Restore(int idProvider);
     }
 }

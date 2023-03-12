@@ -2,12 +2,12 @@
 {
     public interface IServiceUser
     {
-        Task<IEnumerable<DTO.UserResponse>> GetUsers();
-        Task<Models.User> GetUserByEmail(string email);
-        Task<Models.User> GetUserById(int id);
-        Task<bool> SaveUser(Models.User user);
-        Task<bool> UpdateUser(int idUser, Models.User user);
-        Task<bool> DeleteUser(int id);
+        Task<IEnumerable<DTO.UserResponse>> GetAll();
+        Task<Models.User> GetByEmail(string email);
+        Task<Models.User> GetById(int id);
+        Task<bool> Save(Models.User user);
+        Task<bool> Update(int idUser, Models.User user);
+        Task<bool> Delete(int id);
         Task<bool> ChangePassword(string UserName, string CurrentPassword, string NewPassword, string ConfirmPassword);
 
     }

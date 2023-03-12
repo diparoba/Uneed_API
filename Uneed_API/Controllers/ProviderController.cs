@@ -22,9 +22,10 @@ namespace Uneed_API.Controllers
             _serviceProvider = serviceProvider;
         }
         [HttpGet]
+        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
         public async Task<ActionResult> Get()
         {
-            return Ok(await _serviceProvider.GetProviders());
+            return Ok(await _serviceProvider.GetAll());
         }
     }
 }

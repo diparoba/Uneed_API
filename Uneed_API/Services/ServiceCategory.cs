@@ -13,7 +13,7 @@ namespace Uneed_API.Services
             _configuration = configuration;
         }
 
-        public async Task<IEnumerable<Category>> GetCategories()
+        public async Task<IEnumerable<Category>> GetAll()
         {
             try
             {

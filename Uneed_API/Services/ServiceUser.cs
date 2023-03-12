@@ -16,7 +16,7 @@ namespace Uneed_API.Services
         }
 
 
-        public async Task<User> GetUserByEmail(string email)
+        public async Task<User> GetByEmail(string email)
         {
             try
             {
@@ -30,7 +30,7 @@ namespace Uneed_API.Services
             }
         }
 
-        public async Task<User> GetUserById(int id)
+        public async Task<User> GetById(int id)
         {
             try
             {
@@ -44,7 +44,7 @@ namespace Uneed_API.Services
             }
         }
 
-        public async Task<IEnumerable<UserResponse>> GetUsers()
+        public async Task<IEnumerable<UserResponse>> GetAll()
         {
             try
             {
@@ -59,7 +59,6 @@ namespace Uneed_API.Services
                         Status = u.Status,
                         Password = u.Password,
                         Identification = u.Identification,
-                        Adress = u.Adress,
                         Gender = u.Gender,
                         BirthDate = u.BirthDate,
                         Phone = u.Phone,
@@ -75,11 +74,11 @@ namespace Uneed_API.Services
 
         }
 
-        public async Task<bool> SaveUser(User user)
+        public async Task<bool> Save(User user)
         {
             try
             {
-                var infoUser = await GetUserByEmail(user.Email);
+                var infoUser = await GetByEmail(user.Email);
                 if (infoUser != null)
                 {
                     return false;
@@ -97,38 +96,38 @@ namespace Uneed_API.Services
             }
         }
 
-        public async Task<bool> UpdateUser(int idUser, User user)
+        public async Task<bool> Update(int id, User user)
         {
-            try
+            var existingUser = await GetById(id);
+
+            if (existingUser != null)
             {
-                var userInfo = await GetUserById(idUser);
-                if (userInfo == null)
-                {
-                    return false;
-                }
-                userInfo.UpdateDate = DateTime.Now;
-                userInfo.Email = user.Email;
-                userInfo.RolId = user.RolId;
-                userInfo.Lastname = user.Lastname;
-                userInfo.Name = user.Name;
-                userInfo.Phone = user.Phone;
-                userInfo.Password = user.Password;
+                existingUser.Name = user.Name;
+                existingUser.Lastname = user.Lastname;
+                existingUser.Status = user.Status;
+                existingUser.Email = user.Email;
+                existingUser.Password = user.Password;
+                existingUser.Identification = user.Identification;
+                existingUser.Phone = user.Phone;
+                existingUser.IsProvider = user.IsProvider;
+                existingUser.Gender = user.Gender;
+                existingUser.BirthDate = user.BirthDate;
+                existingUser.RolId = user.RolId;
+                existingUser.UpdateDate = DateTime.Now;
 
-                _dataContext.Entry(userInfo).State = EntityState.Modified;
-                return await _dataContext.SaveChangesAsync() > 0;
+                _dataContext.User.Update(existingUser);
+                await _dataContext.SaveChangesAsync();
 
+                return true;
             }
 
-            catch
-            {
-                return false;
-            }
+            return false;
         }
-        public async Task<bool> DeleteUser(int id)
+        public async Task<bool> Delete(int id)
         {
             try
             {
-                var userInfo = await GetUserById(id);
+                var userInfo = await GetById(id);
                 if (userInfo == null)
                 {
                     return false;

@@ -26,7 +26,7 @@ namespace Uneed_API.Controllers
         public async Task<ActionResult> Get()
         {
 
-            return Ok(await _serviceCategory.GetCategories());
+            return Ok(await _serviceCategory.GetAll());
         }
     }
 }
