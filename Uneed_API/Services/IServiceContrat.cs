@@ -14,5 +14,6 @@ namespace Uneed_API.Services
         Task<bool> RateProviderByUser(int userId, int contratServiceId, int calificationValue, string comment);
         Task<IEnumerable<ContratService>> GetContratsByUserId(int userId);
         Task<IEnumerable<ContratService>> GetContratsByProviderId(int proveedorId);
+        Task<ContratService> GetById(int contratId);
     }
 }

@@ -88,6 +88,15 @@ namespace Uneed_API.Services
             }
         }
 
+        public async Task<ContratService> GetById(int contratId)
+        {
+            return await _dataContext.ContratService
+                .Include(c => c.User)
+                .Include(c => c.Provider)
+                .Include(c => c.AddressUser)
+                .FirstOrDefaultAsync(c => c.Id == contratId);
+        }
+
 
         public async Task<bool> FinishContractByUser(int userId, int contratServiceId)
         {

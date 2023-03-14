@@ -71,9 +71,9 @@ namespace Uneed_API.Controllers
                 return BadRequest(ex.Message);
             }
         }
-        /*[HttpPost("contract/accept")]
+        [HttpPost("contract/accept")]
         [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
-        public async Task<ActionResult> AcceptContractByProvider(ContratAcceptResponse contratAcceptResponse)
+        public async Task<ActionResult> AcceptContractByProvider(int contratServiceId)
         {
             try
             {
@@ -83,12 +83,12 @@ namespace Uneed_API.Controllers
                 if (user == null || !user.IsProvider.HasValue || !user.IsProvider.Value)
                     return BadRequest("The user is not a provider.");
 
-                var contratService = await _serviceContrat.GetById(contratAcceptResponse.ContratServiceId);
+                var contratService = await _serviceContrat.GetById(contratServiceId);
 
                 if (contratService == null || contratService.Provider.Id != user.Provider.FirstOrDefault()?.Id)
                     return BadRequest("The contract doesn't exist or the user is not the provider.");
 
-                var result = await _serviceContrat.AcceptContractByProvider(user.Provider.FirstOrDefault()?.Id ?? 0, contratAcceptResponse.ContratServiceId);
+                var result = await _serviceContrat.AcceptContractByProvider(user.Provider.FirstOrDefault()?.Id ?? 0, contratServiceId);
 
                 if (result)
                 {
@@ -103,7 +103,36 @@ namespace Uneed_API.Controllers
             {
                 return BadRequest(ex.Message);
             }
-        }*/
+        }
+        [HttpPost("contract/cancel/provider")]
+        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
+        public async Task<ActionResult> CancelContratByProvider(int contratServiceId)
+        {
+            try
+            {
+                var userId = AuthHelper.GetUserId(HttpContext);
+                var user = await _serviceUser.GetById(userId);
+
+                if (user == null || !user.IsProvider.HasValue || !user.IsProvider.Value)
+                    return BadRequest("The user is not a provider.");
+
+                var result = await _serviceContrat.CancelContractByProvider(user.Provider.FirstOrDefault()?.Id ?? 0, contratServiceId);
+
+                if (result)
+                {
+                    return Ok(new { message = "The contract was canceled." });
+                }
+                else
+                {
+                    return BadRequest("The contract could not be canceled.");
+                }
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
+
 
 
 

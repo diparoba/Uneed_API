@@ -163,14 +163,26 @@ namespace Uneed_API.Controllers
             try
             {
                 var userId = AuthHelper.GetUserId(HttpContext);
-                var addresses = await _serviceAddress.GetByUser(userId);
-                return Ok(addresses);
+                var user = await _serviceUser.GetById(userId);
+
+                if (user == null || !user.IsProvider.HasValue || !user.IsProvider.Value)
+                {
+                    var addresses = await _serviceAddress.GetByUser(userId);
+                    return Ok(addresses);
+                }
+                else
+                {
+
+                    var addresses = await _serviceAddress.GetById(userId);
+                    return Ok(addresses);
+                }
             }
             catch (Exception ex)
             {
                 return BadRequest(ex.Message);
             }
         }
+
         [HttpPost("contract")]
         [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
         public async Task<ActionResult> RequestContract(ContratResponse contratRequest)
@@ -232,7 +244,85 @@ namespace Uneed_API.Controllers
                 return BadRequest(ex.Message);
             }
         }
+        [HttpPost("contract/cancel")]
+        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
+        public async Task<ActionResult> CancelContractByUser(int contratServiceId)
+        {
+            try
+            {
+                var userId = AuthHelper.GetUserId(HttpContext);
+                var user = await _serviceUser.GetById(userId);
 
+                if (user == null)
+                    return BadRequest("The user does not exist.");
 
+                var contratService = await _serviceContrat.GetById(contratServiceId);
+
+                if (contratService == null || contratService.User.Id != userId)
+                    return BadRequest("The contract doesn't exist or the user is not the owner.");
+
+                var result = await _serviceContrat.CancelContractByUser(userId, contratServiceId);
+
+                if (result)
+                {
+                    return Ok(new { message = "The contract was cancelled." });
+                }
+                else
+                {
+                    return BadRequest("The contract could not be cancelled.");
+                }
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
+        [HttpPost("contract/finish")]
+        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
+        public async Task<ActionResult> FinishContratByUser(int contratServiceId)
+        {
+            try
+            {
+                var userId = AuthHelper.GetUserId(HttpContext);
+
+                var result = await _serviceContrat.FinishContractByUser(userId, contratServiceId);
+
+                if (result)
+                {
+                    return Ok(new { message = "The contract was finished." });
+                }
+                else
+                {
+                    return BadRequest("The contract could not be finished.");
+                }
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
+        [HttpPost("rate")]
+        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
+        public async Task<ActionResult> RateProviderByUser(int contratServiceId, int calificationValue, string comment)
+        {
+            try
+            {
+                var userId = AuthHelper.GetUserId(HttpContext);
+                var result = await _serviceContrat.RateProviderByUser(userId, contratServiceId, calificationValue, comment);
+
+                if (result)
+                {
+                    return Ok(new { message = "The provider was rated successfully." });
+                }
+                else
+                {
+                    return BadRequest("The provider could not be rated.");
+                }
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
     }
 }
