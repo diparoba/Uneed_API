@@ -46,6 +46,7 @@ builder.Services.AddScoped<IServiceCategory, ServiceCategory>();
 builder.Services.AddScoped<IServiceProvider, ServiceProvider>();
 builder.Services.AddScoped<IServiceAddress, ServiceAddress>();
 builder.Services.AddScoped<IServiceContrat, ServiceContrat>();
+builder.Services.AddScoped<IServiceAddressUser, ServiceAddressUser>();
 
 builder.Services.AddCors(options =>
 {

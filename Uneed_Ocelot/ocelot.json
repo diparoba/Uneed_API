@@ -9,11 +9,14 @@
           "Port": 8080
         }
       ],
-      "UpstreamPathTemplate": "/login",
-      "UpstreamHttpMethod": [ "POST" ]
+      "UpstreamPathTemplate": "/Auth",
+      "UpstreamHttpMethod": [ "POST" ],
+      "CorsOptions": {
+        "PolicyName": "AllowAll"
+      }
     },
     {
-      "DownstreamPathTemplate": "/api/User",
+      "DownstreamPathTemplate": "/api/Login/renew",
       "DownstreamScheme": "http",
       "DownstreamHostAndPorts": [
         {
@@ -21,32 +24,42 @@
           "Port": 8080
         }
       ],
-      "UpstreamPathTemplate": "/getUsers",
-      "UpstreamHttpMethod": [ "GET" ]
+      "UpstreamPathTemplate": "/Renew",
+      "UpstreamHttpMethod": [ "POST" ],
+      "CorsOptions": {
+        "PolicyName": "AllowAll"
+      }
     },
-    {
-      "DownstreamPathTemplate": "/api/ServCategory",
-      "DownstreamScheme": "http",
-      "DownstreamHostAndPorts": [
-        {
-          "Host": "uneed-mongoapi",
-          "Port": 5002
+      {
+        "DownstreamPathTemplate": "/api/User",
+        "DownstreamScheme": "http",
+        "DownstreamHostAndPorts": [
+          {
+            "Host": "uneed-api",
+            "Port": 8080
+          }
+        ],
+        "UpstreamPathTemplate": "/User",
+        "UpstreamHttpMethods": [ "GET, POST, PUT" ],
+        "CorsOptions": {
+          "PolicyName": "AllowAll"
         }
-      ],
-      "UpstreamPathTemplate": "/getCategories",
-      "UpstreamHttpMethod": [ "GET" ]
-    },
-    {
-      "DownstreamPathTemplate": "/api/ServCategory",
-      "DownstreamScheme": "http",
-      "DownstreamHostAndPorts": [
+      },
         {
-          "Host": "uneed-mongoapi",
-          "Port": 5002
+          "DownstreamPathTemplate": "/api/ServCategory",
+          "DownstreamScheme": "http",
+          "DownstreamHostAndPorts": [
+            {
+              "Host": "uneed-mongoapi",
+              "Port": 5002
+            }
+          ],
+          "UpstreamPathTemplate": "/Category",
+          "UpstreamHttpMethods": [ "GET, POST" ],
+          "CorsOptions": {
+            "PolicyName": "AllowAll"
+          }
         }
-      ],
-      "UpstreamPathTemplate": "/Category",
-      "UpstreamHttpMethod": [ "POST" ]
-    }
+      
   ]
 }

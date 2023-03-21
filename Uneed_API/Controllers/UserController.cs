@@ -8,6 +8,8 @@ using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using Uneed_API.DTO;
 using Uneed_API.Models;
 using Uneed_API.Services;
+using System.Linq;
+
 
 namespace Uneed_API.Controllers
 {
@@ -20,12 +22,15 @@ namespace Uneed_API.Controllers
         private readonly IServiceAddress _serviceAddress;
         private readonly Services.IServiceProvider _serviceProvider;
         private readonly IServiceContrat _serviceContrat;
-        public UserController(IServiceUser serviceUser, IServiceAddress serviceAddress, Services.IServiceProvider serviceProvider, IServiceContrat serviceContrat)
+        private readonly IServiceAddressUser _serviceAddressUser;
+        public UserController(IServiceUser serviceUser, IServiceAddress serviceAddress, Services.IServiceProvider serviceProvider, IServiceContrat serviceContrat, IServiceAddressUser serviceAddressUser)
         {
             _serviceProvider = serviceProvider;
             _serviceUser = serviceUser;
             _serviceAddress = serviceAddress;
             _serviceContrat = serviceContrat;
+            _serviceAddressUser = serviceAddressUser;
+
         }
 
 
@@ -110,8 +115,8 @@ namespace Uneed_API.Controllers
                     AddressUser = new List<AddressUser> { new AddressUser { UserId = userId } }
                 };
 
-
                 var result = await _serviceAddress.Save(address);
+
                 return Ok(new { result = result });
             }
             catch (Exception ex)
@@ -119,6 +124,42 @@ namespace Uneed_API.Controllers
                 return BadRequest(ex.Message);
             }
         }
+        [HttpGet("addresses")]
+        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
+        public async Task<ActionResult<IEnumerable<AddressUserResponse>>> GetByUserId()
+        {
+            try
+            {
+                var userId = AuthHelper.GetUserId(HttpContext);
+                var addresses = await _serviceAddress.GetByUser(userId);
+
+                if (addresses == null)
+                {
+                    return NotFound("No addresses found for the user.");
+                }
+
+                var response = addresses.Select(address => new AddressUserResponse
+                {
+                    AddressId = address.Id,
+                    AddressName = address.Name,
+                    PrincipalStreet = address.PrincipalStreet,
+                    SecondaryStreet = address.SecondaryStreet,
+                    UserId = userId,
+                    UserName = address.AddressUser.First(au => au.UserId == userId).User.Name,
+                    Lastname = address.AddressUser.First(au => au.UserId == userId).User.Lastname
+                });
+
+                return Ok(response);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
+
+
+
+
         [HttpPost("provider")]
         [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
         public async Task<ActionResult> RegisterAsProvider(ProviderResponse providerResponse)
@@ -156,32 +197,9 @@ namespace Uneed_API.Controllers
             }
         }
 
-        [HttpGet("adresses")]
-        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
-        public async Task<ActionResult<IEnumerable<Address>>> GetAddressesByUserId()
-        {
-            try
-            {
-                var userId = AuthHelper.GetUserId(HttpContext);
-                var user = await _serviceUser.GetById(userId);
 
-                if (user == null || !user.IsProvider.HasValue || !user.IsProvider.Value)
-                {
-                    var addresses = await _serviceAddress.GetByUser(userId);
-                    return Ok(addresses);
-                }
-                else
-                {
 
-                    var addresses = await _serviceAddress.GetById(userId);
-                    return Ok(addresses);
-                }
-            }
-            catch (Exception ex)
-            {
-                return BadRequest(ex.Message);
-            }
-        }
+
 
         [HttpPost("contract")]
         [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
